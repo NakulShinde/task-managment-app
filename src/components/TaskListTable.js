@@ -1,7 +1,8 @@
 import React, {Component} from "react"
 import {connect} from 'react-redux'
-import {utilsGetDate} from './../utils'
+import {Link} from 'react-router-dom';
 
+import {utilsGetDate} from './../utils'
 import {TABLE_COLUMNS} from './../utils/constants'
 import {CustomButton} from './shared/Buttons'
 import {getcurrentPageTasks} from "../utils/index";
@@ -35,32 +36,50 @@ class TaskListTable extends Component {
             </div>
         }
         return (
-            <div>
+            <div className="grid-container">
                 {generateHeadRow()}
                 {currentPageTasks.map((task, index) => {
-                    return <div key={index} className="grid-row">
-                        <div data-label={TABLE_COLUMNS.title} className="grid-col">{task.title}</div>
-                        <div data-label={TABLE_COLUMNS.description} className="grid-col">{task.description}</div>
-                        <div data-label={TABLE_COLUMNS.status} className="grid-col">{task.status}</div>
-                        <div data-label={TABLE_COLUMNS.duedate} className="grid-col">{utilsGetDate(task.duedate)}</div>
-                        <div data-label={TABLE_COLUMNS.priority} className="grid-col">{task.priority}</div>
-                        <div data-label={TABLE_COLUMNS.actions} className="grid-col grid-action">
-                            <CustomButton
-                                text="Postpone"
-                                customClass={['button', 'button-blue-hollow', (task.status === "RESOLVED")? 'button-disabled': '']}
-                                isDisable={(task.status === "RESOLVED")? true: false}
-                                onClickHandler={this
+
+                    return <Link key={index} to={`/task/${task.uuid}`}>
+                        <div className="grid-row">
+                            <div data-label={TABLE_COLUMNS.title} className="grid-col">{task.title}</div>
+                            <div data-label={TABLE_COLUMNS.description} className="grid-col">{task.description}</div>
+                            <div data-label={TABLE_COLUMNS.status} className="grid-col">{task.status}</div>
+                            <div data-label={TABLE_COLUMNS.duedate} className="grid-col">{utilsGetDate(task.duedate)}</div>
+                            <div data-label={TABLE_COLUMNS.priority} className="grid-col">{task.priority}</div>
+                            <div data-label={TABLE_COLUMNS.actions} className="grid-col grid-action">
+                                <CustomButton
+                                    text="Postpone"
+                                    customClass={[
+                                    'button',
+                                    'button-blue-hollow',
+                                    (task.status === "RESOLVED")
+                                        ? 'button-disabled'
+                                        : ''
+                                ]}
+                                    isDisable={(task.status === "RESOLVED")
+                                    ? true
+                                    : false}
+                                    onClickHandler={this
                                     .onPostponeClick
                                     .bind(this, task)}></CustomButton>
-                            <CustomButton
-                                text="Resolved"
-                                customClass={['button', (task.status === "RESOLVED")? 'button-disabled': '']}
-                                isDisable={(task.status === "RESOLVED")? true: false}
-                                onClickHandler={this
-                                .onResolveClick
-                                .bind(this, task)}></CustomButton>
+                                <CustomButton
+                                    text="Resolved"
+                                    customClass={[
+                                    'button',
+                                    (task.status === "RESOLVED")
+                                        ? 'button-disabled'
+                                        : ''
+                                ]}
+                                    isDisable={(task.status === "RESOLVED")
+                                    ? true
+                                    : false}
+                                    onClickHandler={this
+                                    .onResolveClick
+                                    .bind(this, task)}></CustomButton>
+                            </div>
                         </div>
-                    </div>
+                    </Link>
 
                 })}
 

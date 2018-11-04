@@ -3,6 +3,7 @@ import {BrowserRouter, Route} from 'react-router-dom';
 
 import './App.css'
 import TaksListHome from './components/TaskListHome'
+import TaskDetails from './components/TaskDetails'
 
 class App extends Component {
     render() {
@@ -10,6 +11,7 @@ class App extends Component {
             <BrowserRouter>
                 <div>
                     <Route exact path="/" component={TaksListHome}/>
+                    <Route path="/task/:id" component={TaskDetails}/>
                 </div>
             </BrowserRouter>
         );

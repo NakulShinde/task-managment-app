@@ -23,3 +23,8 @@ export const resolveTaskAPI = (taskId) => {
     })
 }
 
+export const getTaskDetailsAPI = (taskId) => {
+    let URL = `/task/${taskId}`
+    return fetch(URL)
+}
+
