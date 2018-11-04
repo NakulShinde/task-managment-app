@@ -4,9 +4,19 @@ import {bindActionCreators} from 'redux'
 import {utilsGetDate} from './../utils'
 
 import {TABLE_COLUMNS} from './../utils/constants'
+import {CustomButton} from './shared/Buttons'
 
 class TaskListTable extends Component {
 
+    onResolveClick(task) {
+        console.log("onResolveClick click", task)
+    }
+    onPostponeClick(task) {
+        console.log("onPostponeClick click", task)
+    }
+    onRestoreClick(task) {
+        console.log("onRestoreClick click", task)
+    }
     render() {
         const {currentPageTasks, isLoading, error} = this.props;
 
@@ -41,6 +51,29 @@ class TaskListTable extends Component {
                             <td data-label={TABLE_COLUMNS.status}>{task.status}</td>
                             <td data-label={TABLE_COLUMNS.duedate}>{utilsGetDate(task.duedate)}</td>
                             <td data-label={TABLE_COLUMNS.priority}>{task.priority}</td>
+                            <td data-label={TABLE_COLUMNS.actions}>
+                                {(task.status === "RESOLVED")
+                                    ?   <CustomButton
+                                            text="Restore"
+                                            customClass={['button','button-blue-hollow']}
+                                            onClickHandler={this
+                                            .onRestoreClick
+                                            .bind(this, task)}></CustomButton>
+                                    : <React.Fragment>
+                                        <CustomButton
+                                            text="Postpone"
+                                            customClass={['button','button-blue-hollow']}
+                                            onClickHandler={this
+                                            .onPostponeClick
+                                            .bind(this, task)}></CustomButton>
+                                        <CustomButton
+                                            text="Resolved"
+                                            customClass={['button']}
+                                            onClickHandler={this
+                                            .onResolveClick
+                                            .bind(this, task)}></CustomButton>
+                                    </React.Fragment>}
+                            </td>
                         </tr>
                     })}
                 </tbody>
@@ -50,11 +83,7 @@ class TaskListTable extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return { 
-        currentPageTasks: state.taskList.currentPageTasks,
-        isLoading: state.taskList.isLoading,
-        error: state.taskList.error
-    }
+    return {currentPageTasks: state.taskList.currentPageTasks, isLoading: state.taskList.isLoading, error: state.taskList.error}
 }
 
 function matchDispatchToProps(dispatch) {

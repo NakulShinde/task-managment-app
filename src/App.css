@@ -93,6 +93,7 @@ table th {
     display: flex;
     justify-content: flex-end;
     padding: 0.5em;
+    font-size: 0.8em;
 }
 
 .pagination span {
@@ -113,4 +114,49 @@ table th {
     .pagination span {
         padding: 4px 8px;
     }
+    .button {
+        padding: 3px 7px;
+        margin: 3px;
+    }
+}
+
+.button {
+    background-color: #1789ec;
+    border-color: #1789ec;
+    color: #ffffff;
+    padding: 5px 10px;
+    margin: 5px;
+    letter-spacing: 1px;
+    line-height: 1;
+    outline: 0;
+    cursor: pointer;
+    border: 1px solid #808080;
+    font-size: 0.8em;
+}
+.button:hover {
+    background-color: #049fd9;
+    border-color: #049fd9;
+}
+
+.button.button-disabled {
+    opacity: 0.7;
+}
+.button.button-disabled:hover {
+    background-color: #1789ec;
+    cursor: not-allowed;
+}
+
+.button-blue-hollow {
+    background-color: #ffffff;
+    color: #1789ec;
+    border: 1px solid #1789ec;
+}
+.button-blue-hollow:hover {
+    background-color: #ffffff;
+    color: #049fd9;
+    border: 1px solid #049fd9;
+}
+.button-blue-hollow.button-disabled:hover {
+    background-color: #ffffff;
+    border: 1px solid #1789ec;
 }

@@ -7,5 +7,6 @@ export const TABLE_COLUMNS = {
     description: "Description",
     status: "Status",
     duedate: "Due Date",
-    priority: "Priority"
+    priority: "Priority",
+    actions: "Actions"
 };
