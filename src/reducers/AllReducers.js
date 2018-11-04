@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import TaskReducer from './TaskReducer'
+import {tasksIsLoading, tasksHasErrored, tasksSuccess, currentPage} from './TaskReducer'
 
 /*
  * We combine all reducers into a single object before updated data is dispatched (sent) to store
@@ -7,7 +7,10 @@ import TaskReducer from './TaskReducer'
  * */
 
 const AllReducers = combineReducers({
-    taskList: TaskReducer
+    tasksIsLoading: tasksIsLoading,
+    tasksSuccess: tasksSuccess,
+    tasksHasErrored: tasksHasErrored,
+    currentPage: currentPage
 });
 
 export default AllReducers;

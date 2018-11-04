@@ -1,9 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
 
-import {fetchTasksList, setTasksList, errorTasksList} from "../actions/TaskListActions"
-import {getTasksList} from './../services/APIService'
+import {fetchTasksData} from "../actions/TaskListActions"
 
 import TaskListTable from './TaskListTable'
 import Pagination from './Pagination'
@@ -13,28 +11,18 @@ class TaskListHome extends Component {
     componentDidMount() {
         this
             .props
-            .fetchTasksList();
-
-        getTasksList().then(data => {
-            if (data.error) {
-                this
-                    .props
-                    .errorTasksList(data);
-                return;
-            }
-            this
-                .props
-                .setTasksList(data)
-
-        }).catch(e => {
-            console.log("fetchTasksList Error", e);
-            this
-                .props
-                .setTasksList([])
-        });
+            .fetchData()
     }
 
     render() {
+
+        if (this.props.isLoading) {
+            return <h4 className="cal__title">Loading…</h4>
+
+        }
+        if (this.props.hasErrored) {
+            return <h4 className="cal__title">Sorry! There was an error loading the items</h4>;
+        }
         return (
             <React.Fragment>
                 <h4>Tasks Summary</h4>
@@ -47,14 +35,17 @@ class TaskListHome extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return {}
-}
+    return {
+        tasksList: state.tasksSuccess, 
+        hasErrored: state.tasksHasErrored, 
+        isLoading: state.tasksIsLoading
+    };
+};
 
-function matchDispatchToProps(dispatch) {
-    return bindActionCreators({
-        fetchTasksList: fetchTasksList,
-        setTasksList: setTasksList,
-        errorTasksList: errorTasksList
-    }, dispatch);
-}
+const matchDispatchToProps = (dispatch) => {
+    return {
+        fetchData: (url) => dispatch(fetchTasksData(url))
+    };
+};
+
 export default connect(mapStateToProps, matchDispatchToProps)(TaskListHome)

@@ -1,19 +1,34 @@
-export const fetchTasksList = () => {
-    return {type: 'FETCH_TASKLIST_DATA', payload: {}}
-};
+import {getTasksList} from './../services/APIService'
 
-export const setTasksList = (data) => {
-    return {type: 'SET_TASKLIST_DATA', payload: data}
-};
+export const changeCurrentPage = (newPage) => {
+    return {type: 'CHANGE_CURRENT_PAGE', newPage}
+}
 
-export const updateTasksList = (data) => {
-    return {type: 'UPDATE_TASKLIST_DATA', payload: data}
-};
+export function tasksHasErrored(bool) {
+    return {type: 'TASKS_HAS_ERRORED', hasErrored: bool};
+}
 
-export const errorTasksList = (errorData) => {
-    return {type: 'ERROR_TASKLIST_DATA', payload: errorData}
-};
+export function tasksIsLoading(bool) {
+    return {type: 'TASKS_IS_LOADING', isLoading: bool};
+}
 
-export const setPaginationPage = (newPage) => {
-    return {type: 'PAGINATION_PAGE_UPDATE', payload: newPage}
+export function tasksFetchSuccess(items) {
+    return {type: 'TASKS_FETCH_DATA_SUCCESS', items};
+}
+
+export function fetchTasksData() {
+    return (dispatch) => {
+        dispatch(tasksIsLoading(true));
+
+        getTasksList().then((response) => {
+                dispatch(tasksIsLoading(false));
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                return response;
+            })
+            .then((response) => response.json())
+            .then((items) => dispatch(tasksFetchSuccess(items)))
+            .catch(() => dispatch(tasksHasErrored(true)));
+    };
 }

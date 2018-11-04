@@ -1,11 +1,9 @@
 import React, {Component} from "react"
 import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
-
-import {setPaginationPage} from './../actions/TaskListActions'
 
 import {PAGE_LIMIT, LEFT_PAGE, RIGHT_PAGE} from './../utils/constants'
 import {fetchPageNumbers} from './../utils/index'
+import {changeCurrentPage} from './../actions/TaskListActions'
 
 class Pagination extends Component {
 
@@ -13,25 +11,23 @@ class Pagination extends Component {
         if (newPage === LEFT_PAGE) {
             this
                 .props
-                .setPaginationPage(this.props.currentPage - 2)
+                .changePage(this.props.currentPage - 2)
         } else if (newPage === RIGHT_PAGE) {
             this
                 .props
-                .setPaginationPage(this.props.currentPage + 2)
+                .changePage(this.props.currentPage + 2)
         } else {
             this
                 .props
-                .setPaginationPage(newPage)
+                .changePage(newPage)
         }
     }
 
     render() {
-        const {currentPage, tasks, error} = this.props;
-        if(error || tasks.length === 0){
-            return <div></div>
-        }
-        const totalPages = Math.floor(tasks.length / PAGE_LIMIT);
-        
+        const {currentPage, tasksList} = this.props;
+
+        const totalPages = Math.floor(tasksList.length / PAGE_LIMIT);
+
         const pages = fetchPageNumbers(totalPages, currentPage);
 
         const pageItem = (item, index, active = 0) => {
@@ -60,15 +56,15 @@ class Pagination extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        tasks: state.taskList.tasks, 
-        currentPage: state.taskList.currentPage,
-        error: state.taskList.error
-    }
-}
+        tasksList: state.tasksSuccess, 
+        currentPage: state.currentPage
+    };
+};
 
-function matchDispatchToProps(dispatch) {
-    return bindActionCreators({
-        setPaginationPage: setPaginationPage
-    }, dispatch);
-}
+const matchDispatchToProps = (dispatch) => {
+    return {
+        changePage: (page) => dispatch(changeCurrentPage(page))
+    };
+};
+
 export default connect(mapStateToProps, matchDispatchToProps)(Pagination)

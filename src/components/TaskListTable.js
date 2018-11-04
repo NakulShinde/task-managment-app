@@ -1,10 +1,12 @@
 import React, {Component} from "react"
 import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
 import {utilsGetDate} from './../utils'
 
 import {TABLE_COLUMNS} from './../utils/constants'
 import {CustomButton} from './shared/Buttons'
+import {getcurrentPageTasks} from "../utils/index";
+
+import {fetchTasksData} from "../actions/TaskListActions"
 
 class TaskListTable extends Component {
 
@@ -17,19 +19,12 @@ class TaskListTable extends Component {
     onRestoreClick(task) {
         console.log("onRestoreClick click", task)
     }
+    
     render() {
-        const {currentPageTasks, isLoading, error} = this.props;
-
-        if (error) {
-            return <div>
-                <h1 className="cal__title">{error.status}
-                    - {error.statusText}</h1>
-            </div>
-        }
-        if (!currentPageTasks || isLoading) {
-            return <div>
-                <h1 className="cal__title">Loading...</h1>
-            </div>
+        
+        const currentPageTasks = getcurrentPageTasks(this.props.tasksList, this.props.currentPage);
+        if(!currentPageTasks){
+            return <div></div>
         }
         const generateHeadRow = () => {
             return <tr>
@@ -83,10 +78,16 @@ class TaskListTable extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return {currentPageTasks: state.taskList.currentPageTasks, isLoading: state.taskList.isLoading, error: state.taskList.error}
-}
+    return {
+        tasksList: state.tasksSuccess,
+        currentPage: state.currentPage
+    };
+};
 
-function matchDispatchToProps(dispatch) {
-    return bindActionCreators({}, dispatch);
-}
+const matchDispatchToProps = (dispatch) => {
+    return {
+        fetchData: (url) => dispatch(fetchTasksData(url))
+    };
+};
+
 export default connect(mapStateToProps, matchDispatchToProps)(TaskListTable)

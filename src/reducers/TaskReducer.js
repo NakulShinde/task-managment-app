@@ -1,73 +1,42 @@
-import {PAGE_LIMIT} from "../utils/constants";
 
-const defaultState = {
-    isLoading: true,
-    tasks: [],
-    currentPage: 1,
-    currentPageTasks: []
-}
+import {orderByDueDateAndPriority} from './../utils/index'
 
-const getcurrentPageTasks = (tasks, currentPage) => {
-    let highIndex = (tasks.length < PAGE_LIMIT)
-        ? tasks.length
-        : (currentPage + 1) * PAGE_LIMIT;
-
-    return [...tasks.slice(currentPage * PAGE_LIMIT, highIndex)];
-}
-
-const orderByDueDate = (tasks) => {
-    return tasks.sort((firstTask, secTask) => {
-        return firstTask.dueDate - secTask.dueDate
-    });
-}
-const orderByPriority = (tasks) => {
-    return tasks.sort((firstTask, secTask) => {
-        return secTask.priority - firstTask.priority
-    });
-}
-
-const orderByDueDateAndPriority = (tasks) => {
-    return orderByPriority(orderByDueDate(tasks));
-}
-
-export default function (state = defaultState, action) {
-    let orderBy = null;
+export function tasksHasErrored(state = false, action) {
     switch (action.type) {
-        case 'FETCH_TASKLIST_DATA':
-            return Object.assign(state, {isLoading: true});
-        case 'SET_TASKLIST_DATA':
+        case 'TASKS_HAS_ERRORED':
+            return action.hasErrored;
 
-            orderBy = orderByDueDateAndPriority(action.payload);
+        default:
+            return state;
+    }
+}
 
-            return Object.assign({}, {
-                isLoading: false,
-                currentPage: 1,
-                tasks: [...orderBy],
-                currentPageTasks: getcurrentPageTasks(orderBy, 1)
-            });
-            
-            case 'UPDATE_TASKLIST_DATA':
-            
-            orderBy = orderByDueDateAndPriority(...state.tasks);
-    
-            return {
-                isLoading: false,
-                tasks: [...orderBy]
-            }
-        case 'ERROR_TASKLIST_DATA':
-            return {
-                isLoading: false,
-                error: {
-                    ...action.payload
-                }
-            }
-        case 'PAGINATION_PAGE_UPDATE':
-            return Object.assign({}, {
-                isLoading: false,
-                currentPage: action.payload,
-                tasks: [...state.tasks],
-                currentPageTasks: getcurrentPageTasks(state.tasks, action.payload)
-            });
+export function tasksIsLoading(state = false, action) {
+    switch (action.type) {
+        case 'TASKS_IS_LOADING':
+            return action.isLoading;
+
+        default:
+            return state;
+    }
+}
+
+export function currentPage(state = 1, action) {
+    switch (action.type) {
+        case 'CHANGE_CURRENT_PAGE':
+            return action.newPage;
+        default:
+            return state;
+    }
+}
+
+export function tasksSuccess(state = [], action) {
+
+    switch (action.type) {
+        case 'TASKS_FETCH_DATA_SUCCESS':
+
+            let orderBy = orderByDueDateAndPriority(action.items);
+            return [...orderBy];
         default:
             return state;
     }

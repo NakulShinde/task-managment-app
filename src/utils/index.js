@@ -1,4 +1,4 @@
-import {LEFT_PAGE, RIGHT_PAGE} from './constants'
+import {LEFT_PAGE, RIGHT_PAGE, PAGE_LIMIT} from './constants'
 
 export const utilsGetDate = (dateTime) => {
     return new Date(dateTime).toLocaleString();
@@ -76,3 +76,26 @@ export const fetchPageNumbers = (totalPages, currentPage) => {
 
     return range(1, totalPages);
 };
+
+export const getcurrentPageTasks = (tasks, currentPage) => {
+    let highIndex = (tasks.length < PAGE_LIMIT)
+        ? tasks.length
+        : (currentPage + 1) * PAGE_LIMIT;
+
+    return [...tasks.slice(currentPage * PAGE_LIMIT, highIndex)];
+}
+
+export const orderByDueDate = (tasks) => {
+    return tasks.sort((firstTask, secTask) => {
+        return firstTask.dueDate - secTask.dueDate
+    });
+}
+export const orderByPriority = (tasks) => {
+    return tasks.sort((firstTask, secTask) => {
+        return secTask.priority - firstTask.priority
+    });
+}
+
+export const orderByDueDateAndPriority = (tasks) => {
+    return orderByPriority(orderByDueDate(tasks));
+}
