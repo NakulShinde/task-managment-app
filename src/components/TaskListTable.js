@@ -6,20 +6,17 @@ import {TABLE_COLUMNS} from './../utils/constants'
 import {CustomButton} from './shared/Buttons'
 import {getcurrentPageTasks} from "../utils/index";
 
-import {fetchTasksData} from "../actions/TaskListActions"
+import {postponeTask, resolveTask} from "../actions/TaskListActions"
 
 class TaskListTable extends Component {
 
     onResolveClick(task) {
-        console.log("onResolveClick click", task)
+        this.props.resolveTask(task.uuid);
     }
     onPostponeClick(task) {
-        console.log("onPostponeClick click", task)
+        this.props.postponeTask(task.uuid);
     }
-    onRestoreClick(task) {
-        console.log("onRestoreClick click", task)
-    }
-    
+
     render() {
         
         const currentPageTasks = getcurrentPageTasks(this.props.tasksList, this.props.currentPage);
@@ -48,12 +45,13 @@ class TaskListTable extends Component {
                             <td data-label={TABLE_COLUMNS.priority}>{task.priority}</td>
                             <td data-label={TABLE_COLUMNS.actions}>
                                 {(task.status === "RESOLVED")
-                                    ?   <CustomButton
+                                    ?  /* <CustomButton
                                             text="Restore"
                                             customClass={['button','button-blue-hollow']}
                                             onClickHandler={this
                                             .onRestoreClick
-                                            .bind(this, task)}></CustomButton>
+                                            .bind(this, task)}></CustomButton> */
+                                            <div></div>
                                     : <React.Fragment>
                                         <CustomButton
                                             text="Postpone"
@@ -86,7 +84,8 @@ const mapStateToProps = (state) => {
 
 const matchDispatchToProps = (dispatch) => {
     return {
-        fetchData: (url) => dispatch(fetchTasksData(url))
+        postponeTask: (id) => dispatch(postponeTask(id)),
+        resolveTask: (id) => dispatch(resolveTask(id))
     };
 };
 

@@ -38,10 +38,18 @@ table tr {
     padding: 0.35em;
 }
 
+table tr:nth-child(even), table th {
+    background-color: #ddd;
+}
+
 table td,
 table th {
     padding: 0.5em;
     text-align: center;
+}
+
+table td:last-child {
+    text-align: end;
 }
 
 table th {
@@ -71,6 +79,7 @@ table th {
         margin-bottom: 0.5em;
     }
 
+    
     table td {
         border-bottom: 1px solid #ddd;
         display: block;
@@ -159,4 +168,36 @@ table th {
 .button-blue-hollow.button-disabled:hover {
     background-color: #ffffff;
     border: 1px solid #1789ec;
+}
+
+.page-loader-parent {
+    position: fixed;
+    z-index: 1040;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.page-loader {
+    position: fixed;
+    z-index: auto;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background-color: rgb(0, 0, 0);
+    opacity: 0.5;
+}
+
+.page-loader-content {
+    position: absolute;
+    width: 400px;
+    top: 51%;
+    left: 43%;
+    transform: translate(-50%, -50%);
+    border: 1px solid rgb(229, 229, 229);
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px;
+    padding: 20px;
 }

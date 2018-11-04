@@ -8,19 +8,15 @@ import {changeCurrentPage} from './../actions/TaskListActions'
 class Pagination extends Component {
 
     onPageChange(newPage) {
+        let newVal = this.props.currentPage;
         if (newPage === LEFT_PAGE) {
-            this
-                .props
-                .changePage(this.props.currentPage - 2)
+            newVal -= 2;
         } else if (newPage === RIGHT_PAGE) {
-            this
-                .props
-                .changePage(this.props.currentPage + 2)
+            newVal += 2;
         } else {
-            this
-                .props
-                .changePage(newPage)
+            newVal = newPage;
         }
+        this.props.changePage(newVal)
     }
 
     render() {
@@ -55,10 +51,7 @@ class Pagination extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return {
-        tasksList: state.tasksSuccess, 
-        currentPage: state.currentPage
-    };
+    return {tasksList: state.tasksSuccess, currentPage: state.currentPage};
 };
 
 const matchDispatchToProps = (dispatch) => {

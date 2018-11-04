@@ -1,4 +1,4 @@
-import {getTasksList} from './../services/APIService'
+import {getTasksListAPI, postponeTaskAPI, resolveTaskAPI} from './../services/APIService'
 
 export const changeCurrentPage = (newPage) => {
     return {type: 'CHANGE_CURRENT_PAGE', newPage}
@@ -20,7 +20,7 @@ export function fetchTasksData() {
     return (dispatch) => {
         dispatch(tasksIsLoading(true));
 
-        getTasksList().then((response) => {
+        getTasksListAPI().then((response) => {
                 dispatch(tasksIsLoading(false));
                 if (!response.ok) {
                     throw Error(response.statusText);
@@ -29,6 +29,39 @@ export function fetchTasksData() {
             })
             .then((response) => response.json())
             .then((items) => dispatch(tasksFetchSuccess(items)))
+            .catch(() => dispatch(tasksHasErrored(true)));
+    };
+}
+
+export function postponeTask(taskId){
+    return (dispatch) => {
+        dispatch(tasksIsLoading(true));
+
+        postponeTaskAPI(taskId).then((response) => {
+                dispatch(tasksIsLoading(false));
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                return response;
+            })
+            .then((response) => response.json())
+            .then(() => dispatch(fetchTasksData()))
+            .catch(() => dispatch(tasksHasErrored(true)));
+    };
+}
+export function resolveTask(taskId){
+    return (dispatch) => {
+        dispatch(tasksIsLoading(true));
+
+        resolveTaskAPI(taskId).then((response) => {
+                dispatch(tasksIsLoading(false));
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                return response;
+            })
+            .then((response) => response.json())
+            .then(() => dispatch(fetchTasksData()))
             .catch(() => dispatch(tasksHasErrored(true)));
     };
 }
