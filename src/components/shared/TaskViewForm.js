@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import * as Datetime from 'react-datetime';
+import Datetime from 'react-datetime';
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom';
 
