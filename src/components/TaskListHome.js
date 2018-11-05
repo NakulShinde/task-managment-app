@@ -17,11 +17,11 @@ class TaskListHome extends Component {
     render() {
 
         if (this.props.isLoading) {
-            return <h4 className="cal__title">Loading…</h4>
+            return <h4 className="message">Loading…</h4>
 
         }
         if (this.props.hasErrored) {
-            return <h4 className="cal__title">Sorry! There was an error loading the items</h4>;
+            return <h4 className="message">Sorry! There was an error loading the items</h4>;
         }
         return (
             <React.Fragment>

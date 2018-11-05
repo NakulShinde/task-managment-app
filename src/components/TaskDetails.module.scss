@@ -1,0 +1,37 @@
+@import './../sharedscss/variables';
+
+.formContainer {
+    background-color: $background-color-shade-3;
+    padding: 20px;
+    font-size: 0.8em;
+    border: $border-style;
+}
+/* Clear floats after the columns */
+.formRow:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.formLabel {
+    float: left;
+    width: 25%;
+    margin-top: 6px;
+    font-weight: 600;
+}
+
+.formField {
+    float: left;
+    width: 75%;
+    margin-top: 6px;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+    .formField,
+    .formLabel,
+    input[type=submit] {
+        width: 100%;
+        margin-top: 0;
+    }
+}

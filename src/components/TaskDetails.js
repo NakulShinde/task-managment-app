@@ -5,6 +5,9 @@ import * as Datetime from 'react-datetime';
 import {fetchTaskDetails} from './../actions/TaskDetailsActions';
 import {utilsGetDate} from './../utils'
 
+import styles from './TaskDetails.module.scss'
+import buttonStyles from './../components/shared/Buttons.module.scss'
+
 class TaskDetails extends Component {
 
     constructor(props) {
@@ -37,11 +40,11 @@ class TaskDetails extends Component {
     render() {
 
         if (this.props.isLoading) {
-            return <h4 className="cal__title">Loading…</h4>
+            return <h4 className="message">Loading…</h4>
 
         }
         if (this.props.hasErrored) {
-            return <h4 className="cal__title">Sorry! There was an error loading the items</h4>;
+            return <h4 className="message">Sorry! There was an error loading the items</h4>;
         }
         const formFields = {
             title: "Title",
@@ -57,11 +60,11 @@ class TaskDetails extends Component {
         };
         
         const displayField = ['createdat', 'postponedat', 'postponedtime', 'resolvedat', 'updatedat'].map((field) => {
-            return <div className="form-row">
-                <div className="form-label">
+            return <div className={styles.formRow}>
+                <div className={styles.formLabel}>
                     <label>{formFields[field]}</label>
                 </div>
-                < div className="form-field">
+                < div className={styles.formField}>
                     <label>{utilsGetDate(this.state[field])}</label>
                 </div>
             </div >
@@ -70,13 +73,13 @@ class TaskDetails extends Component {
         return (
             <div>
                 <h4>Task Details</h4 >
-                <div className="form-container">
+                <div className={styles.formContainer}>
                     <form action="#">
-                        <div className="form-row">
-                            <div className="form-label">
+                        <div className={styles.formRow}>
+                            <div className={styles.formLabel}>
                                 <label>{formFields.title}</label>
                             </div>
-                            <div className="form-field">
+                            <div className={styles.formField}>
                                 <input
                                     name={'title'}
                                     onChange={this
@@ -86,11 +89,11 @@ class TaskDetails extends Component {
                                     type="text"></input>
                             </div>
                         </div>
-                        <div className="form-row">
-                            <div className="form-label">
+                        <div className={styles.formRow}>
+                            <div className={styles.formLabel}>
                                 <label>{formFields.description}</label>
                             </div>
-                            <div className="form-field">
+                            <div className={styles.formField}>
                                 <input
                                     name={'description'}
                                     onChange={this
@@ -100,11 +103,11 @@ class TaskDetails extends Component {
                                     type="text"></input>
                             </div>
                         </div>
-                        <div className="form-row">
-                            <div className="form-label">
+                        <div className={styles.formRow}>
+                            <div className={styles.formLabel}>
                                 <label>{formFields.duedate}</label>
                             </div>
-                            <div className="form-field">
+                            <div className={styles.formField}>
                                 <Datetime
                                     value={new Date(this.state.duedate)}
                                     onChange={this
@@ -115,8 +118,8 @@ class TaskDetails extends Component {
 
                         {displayField}
 
-                        <div className="form-row">
-                            <input className="button" type="submit" value="Submit"></input>
+                        <div className={styles.formRow}>
+                            <input className={buttonStyles.button} type="submit" value="Submit"></input>
                         </div>
                     </form>
                 </div>

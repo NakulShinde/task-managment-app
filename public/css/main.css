@@ -32,123 +32,30 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-.app {
-    width: 100%;
-    height: 100%;
-    margin: 0 auto;
-    background: #eaf0f2;
+
+.message {
+  margin: 0 0 48px;
+  padding-top: 54px;
+  font-weight: 300;
+  text-align: center;
 }
 
-.app__content {
-    padding: 20px;
-    color: #5b6a76;
-    overflow: auto;
-    margin: 20px;
-    background-color: #FFF;
-}
-
-.app__header {
-    margin: 0;
-    padding: 10px 38px;
-    background: #1789ec;
-    color: #ffffff;
-    font-weight: 300;
-    text-align: center;
-}
 
 .app__border {
-    max-width: 80%;
-}
-
-.cal__title {
-    margin: 0 0 48px;
-    padding-top: 54px;
-    font-weight: 300;
-    text-align: center;
-}
-
-.app__inputs {
-    display: -webkit-flex;
-    display: flex;
-}
-
-.app__input,
-.app__txt {
-    border: 1px solid #ccd1d3;
-    border-radius: 3px;
-}
-
-.app__txt {
-    -webkit-flex: 3;
-    flex: 3;
-    font-size: 12px;
-    border: 1px solid #ccd1d3;
-    border-radius: 3px;
-    padding: 12px;
-    width: 90%;
-    height: 300px;
-}
-
-.app__actions_left {
-    -webkit-flex: 2;
-    flex: 2;
-    padding-left: 16px;
-}
-.app__actions_right {
-    -webkit-flex: 1;
-    flex: 1;
-}
-
-.app__input {
-    display: block;
-    padding: 0 12px;
-    line-height: 48px;
-    font-size: 18px;
-    margin: 0 0 36px;
-}
-
-.app__button {
-    -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-    -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-    -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-    -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-    transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-    margin: 10px auto;
-    max-width: 180px;
-    text-decoration: none;
-    border-radius: 15px;
-    padding: 10px 25px;
-    background: #1789ec;
-    color: rgba(255,255,255,0.8);
-    box-shadow: rgba(234, 240, 242, 0.5) 0 0 0 2px inset;
-    border: 1px;
-}
-.app__button:hover {
-    color: rgba(255,255,255, 1.0);
-    box-shadow: rgba(14, 162, 241, 0.8) 0 80px 0 2px inset;
-}
-
-.app__error_border {
-    border: 1px red solid;
-}
-.app__error {
-    color: red;
-    font-size: small;
-    padding-top: 10px;
+  max-width: 80%;
 }
 
 .border-line {
-    height: 1px;
-    border: none;
-    margin: 36px auto;
-    background: -moz-linear-gradient(left, rgba(117,136,151,0) 0%, rgba(117,136,151,1) 50%, rgba(117,136,151,0) 100%);
-    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(117,136,151,0)), color-stop(50%, rgba(117,136,151,0.3)), color-stop(100%, rgba(117,136,151,0)));
-    background: -webkit-linear-gradient(left, rgba(117,136,151,0) 0%, rgba(117,136,151,0.3) 50%, rgba(117,136,151,0) 100%);
-    background: -o-linear-gradient(left, rgba(117,136,151,0) 0%, rgba(117,136,151,0.3) 50%, rgba(117,136,151,0) 100%);
-    background: -ms-linear-gradient(left, rgba(117,136,151,0) 0%, rgba(117,136,151,0.3) 50%, rgba(117,136,151,0) 100%);
-    background: linear-gradient(to right, rgba(117,136,151,0) 0%, rgba(117,136,151,0.3) 50%, rgba(117,136,151,0) 100%);
+  height: 1px;
+  border: none;
+  margin: 36px auto;
+  background: -moz-linear-gradient(left, rgba(117,136,151,0) 0%, rgba(117,136,151,1) 50%, rgba(117,136,151,0) 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(117,136,151,0)), color-stop(50%, rgba(117,136,151,0.3)), color-stop(100%, rgba(117,136,151,0)));
+  background: -webkit-linear-gradient(left, rgba(117,136,151,0) 0%, rgba(117,136,151,0.3) 50%, rgba(117,136,151,0) 100%);
+  background: -o-linear-gradient(left, rgba(117,136,151,0) 0%, rgba(117,136,151,0.3) 50%, rgba(117,136,151,0) 100%);
+  background: -ms-linear-gradient(left, rgba(117,136,151,0) 0%, rgba(117,136,151,0.3) 50%, rgba(117,136,151,0) 100%);
+  background: linear-gradient(to right, rgba(117,136,151,0) 0%, rgba(117,136,151,0.3) 50%, rgba(117,136,151,0) 100%);
 }
-
 code,
 pre {
     font-size: 12px;

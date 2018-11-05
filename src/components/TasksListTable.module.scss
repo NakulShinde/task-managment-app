@@ -1,0 +1,72 @@
+@import './../sharedscss/variables';
+
+.gridContainer {
+    background-color: $background-color-shade-3;
+    a {
+        text-decoration: none;
+        background: transparent;
+        color: inherit;
+    }
+    a:nth-child(odd) .gridRow {
+        background-color: $background-color-shade-1;
+    }
+    a .gridRow:hover {
+        background-color: $grid-row-over;
+        cursor: pointer;
+    }
+}
+
+.gridRow {
+    display: flex;
+    justify-content: space-around;
+    font-size: 0.8em;
+    padding: 0.4em;
+    border: $border-style;
+    border-top: none;
+    &.gridHeader {
+        background-color: $background-color-shade-1;
+        text-transform: uppercase;
+        font-weight: 600;
+        border: $border-style;
+    }
+}
+
+.gridCol {
+    flex: 1 1;
+    display: flex;
+    justify-content: center;
+    border-top: none;
+    &.gridAction {
+        display: inline;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .gridRow {
+        display: block;
+        &.gridHeader {
+            display: none;
+        }
+        &.gridHeader+a .gridRow {
+            display: block;
+            border: $border-style;
+        }
+    }
+    .gridCol {
+        display: block;
+        text-align: right;
+        padding: 2px;
+        &.gridAction {
+            display: block;
+            text-align: right;
+        }
+        &::before {
+            content: attr(data-label);
+            float: left;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+        }
+    }
+}

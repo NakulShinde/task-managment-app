@@ -1,0 +1,51 @@
+@import './../../sharedscss/variables';
+
+.button {
+    background-color: $button-primary;
+    border-color: $button-primary;
+    color: $color-white;
+    padding: 5px 10px;
+    margin: 5px;
+    letter-spacing: 1px;
+    line-height: 1;
+    outline: 0;
+    cursor: pointer;
+    border: 1px solid $button-primary;
+    font-size: 0.8em;
+    height: 25px;
+    &:hover {
+        background-color: $button-primary-over;
+        border-color: $button-primary-over;
+    }
+    &.buttonDisabled {
+        opacity: 0.7;
+    }
+    &.buttonDisabled:hover {
+        background-color: $button-primary;
+        border-color: $button-primary;
+        cursor: not-allowed;
+    }
+}
+
+.buttonBlueHollow {
+    background-color: $color-white;
+    color: $button-primary;
+    border: 1px solid $button-primary;
+    &:hover {
+        background-color: $color-white;
+        color: $button-primary-over;
+        border: 1px solid $button-primary-over;
+    }
+    &.buttonDisabled:hover {
+        background-color: $color-white;
+        color: $button-primary;
+        border: 1px solid $button-primary;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .button {
+        padding: 3px 7px;
+        margin: 3px;
+    }
+}

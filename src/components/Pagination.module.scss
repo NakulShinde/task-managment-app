@@ -1,0 +1,26 @@
+@import './../sharedscss/variables';
+
+.pagination {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.5em;
+    font-size: 0.8em;
+    span {
+        color: $app-text-color;
+        padding: 8px 16px;
+        text-decoration: none;
+        &.active {
+            background-color: $primary-color;
+            color: $color-white;
+        }
+        &:hover:not(.active) {
+            background-color: $background-color-shade-1;
+            cursor: pointer;
+        }
+    }
+}
+@media screen and (max-width: 600px) {
+    .pagination span {
+        padding: 4px 8px;
+    }
+}

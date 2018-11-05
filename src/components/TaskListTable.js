@@ -7,7 +7,10 @@ import {TABLE_COLUMNS} from './../utils/constants'
 import {CustomButton} from './shared/Buttons'
 import {getcurrentPageTasks} from "../utils/index";
 
-import {postponeTask, resolveTask} from "../actions/TaskListActions"
+import {postponeTask, resolveTask} from './../actions/TaskListActions'
+
+import styles from './TasksListTable.module.scss'
+import buttonStyles from './shared/Buttons.module.scss'
 
 class TaskListTable extends Component {
 
@@ -29,32 +32,32 @@ class TaskListTable extends Component {
             return <div></div>
         }
         const generateHeadRow = () => {
-            return <div className="grid-row grid-header">
+            return <div className={[styles.gridRow, styles.gridHeader].join(' ')}>
                 {Object
                     .keys(TABLE_COLUMNS)
-                    .map((colKey, index) => <div key={index} className="grid-col">{TABLE_COLUMNS[colKey]}</div>)}
+                    .map((colKey, index) => <div key={index} className={styles.gridCol}>{TABLE_COLUMNS[colKey]}</div>)}
             </div>
         }
         return (
-            <div className="grid-container">
+            <div className={styles.gridContainer}>
                 {generateHeadRow()}
                 {currentPageTasks.map((task, index) => {
 
                     return <Link key={index} to={`/task/${task.uuid}`}>
-                        <div className="grid-row">
-                            <div data-label={TABLE_COLUMNS.title} className="grid-col">{task.title}</div>
-                            <div data-label={TABLE_COLUMNS.description} className="grid-col">{task.description}</div>
-                            <div data-label={TABLE_COLUMNS.status} className="grid-col">{task.status}</div>
-                            <div data-label={TABLE_COLUMNS.duedate} className="grid-col">{utilsGetDate(task.duedate)}</div>
-                            <div data-label={TABLE_COLUMNS.priority} className="grid-col">{task.priority}</div>
-                            <div data-label={TABLE_COLUMNS.actions} className="grid-col grid-action">
+                        <div className={styles.gridRow}>
+                            <div data-label={TABLE_COLUMNS.title} className={styles.gridCol}>{task.title}</div>
+                            <div data-label={TABLE_COLUMNS.description} className={styles.gridCol}>{task.description}</div>
+                            <div data-label={TABLE_COLUMNS.status} className={styles.gridCol}>{task.status}</div>
+                            <div data-label={TABLE_COLUMNS.duedate} className={styles.gridCol}>{utilsGetDate(task.duedate)}</div>
+                            <div data-label={TABLE_COLUMNS.priority} className={styles.gridCol}>{task.priority}</div>
+                            <div data-label={TABLE_COLUMNS.actions} className={[styles.gridCol, styles.gridAction].join(' ')}>
                                 <CustomButton
                                     text="Postpone"
                                     customClass={[
-                                    'button',
-                                    'button-blue-hollow',
+                                    buttonStyles.button,
+                                    buttonStyles.buttonBlueHollow,
                                     (task.status === "RESOLVED")
-                                        ? 'button-disabled'
+                                        ? buttonStyles.buttonDisabled
                                         : ''
                                 ]}
                                     isDisable={(task.status === "RESOLVED")
@@ -66,9 +69,9 @@ class TaskListTable extends Component {
                                 <CustomButton
                                     text="Resolved"
                                     customClass={[
-                                    'button',
+                                    buttonStyles.button,
                                     (task.status === "RESOLVED")
-                                        ? 'button-disabled'
+                                        ? buttonStyles.buttonDisabled
                                         : ''
                                 ]}
                                     isDisable={(task.status === "RESOLVED")

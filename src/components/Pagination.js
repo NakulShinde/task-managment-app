@@ -5,6 +5,8 @@ import {PAGE_LIMIT, LEFT_PAGE, RIGHT_PAGE} from './../utils/constants'
 import {fetchPageNumbers} from './../utils/index'
 import {changeCurrentPage} from './../actions/TaskListActions'
 
+import styles from './Pagination.module.scss'
+
 class Pagination extends Component {
 
     onPageChange(newPage) {
@@ -30,7 +32,7 @@ class Pagination extends Component {
             return <span
                 key={index}
                 className={(active)
-                ? 'active'
+                ? styles.active
                 : ''}
                 onClick={() => {
                 this.onPageChange(item);
@@ -38,7 +40,7 @@ class Pagination extends Component {
         }
 
         return (
-            <div className="pagination">
+            <div className={styles.pagination}>
                 {pages.map((item, index) => {
                     if (item === currentPage) {
                         return pageItem(item, index, 1)
