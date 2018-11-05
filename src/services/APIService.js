@@ -28,3 +28,19 @@ export const getTaskDetailsAPI = (taskId) => {
     return fetch(URL)
 }
 
+export const updateTaskDetailsAPI = (task) => {
+    let URL = `/task/${task.uuid}`
+    return fetch(URL, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify(task)
+    })
+}
+
+export const addTaskDetailsAPI = (taskId) => {
+    let URL = `/task/${taskId}`
+    return fetch(URL)
+}
+

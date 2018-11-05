@@ -1,5 +1,5 @@
 
-import {getTaskDetailsAPI} from './../services/APIService'
+import {getTaskDetailsAPI, updateTaskDetailsAPI} from './../services/APIService'
 import {tasksIsLoading, tasksHasErrored} from './TaskListActions'
 
 export function taskDetailsData(item) {
@@ -19,6 +19,22 @@ export function fetchTaskDetails(id) {
             })
             .then((response) => response.json())
             .then((item) => dispatch(taskDetailsData(item)))
+            .catch(() => dispatch(tasksHasErrored(true)));
+    };
+}
+export function updateTaskDetails(task) {
+    return (dispatch) => {
+        dispatch(tasksIsLoading(true));
+
+        updateTaskDetailsAPI(task).then((response) => {
+                dispatch(tasksIsLoading(false));    
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                return response;
+            })
+            .then((response) => response.json())
+            .then((item) => dispatch(fetchTaskDetails(task.uuid)))
             .catch(() => dispatch(tasksHasErrored(true)));
     };
 }

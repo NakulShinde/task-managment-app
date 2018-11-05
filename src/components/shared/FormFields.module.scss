@@ -1,29 +1,9 @@
-@import './../sharedscss/variables';
 
-
-* {
-    box-sizing: border-box;
-}
-
-.backButton {
-    margin-left: inherit;
-}
-.formContainer {
-    background-color: $background-color-shade-3;
-    padding: 20px;
-    font-size: 0.8em;
-    border: $border-style;
-}
-/* Clear floats after the columns */
 .formRow:after {
     content: "";
     display: table;
     clear: both;
 }
-.formRowFooter {
-    text-align: right;
-}
-
 .formLabel {
     float: left;
     width: 25%;
@@ -35,9 +15,6 @@
     float: left;
     width: 75%;
     margin-top: 6px;
-}
-.errorField {
-    border: 1px solid $color-red !important;
 }
 
 /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */

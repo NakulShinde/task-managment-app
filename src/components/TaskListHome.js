@@ -16,16 +16,17 @@ class TaskListHome extends Component {
 
     render() {
 
+        let msg = ''; 
         if (this.props.isLoading) {
-            return <h4 className="message">Loading…</h4>
-
+            msg =  <h4 className="message">Loading…</h4>
         }
         if (this.props.hasErrored) {
-            return <h4 className="message">Sorry! There was an error loading the items</h4>;
+            msg = <h4 className="message">Sorry! There was an error occured. Please try again later</h4>;
         }
         return (
             <React.Fragment>
                 <h4>Tasks Summary</h4>
+                {msg}
                 <Pagination></Pagination>
                 <TaskListTable></TaskListTable>
                 <Pagination></Pagination>

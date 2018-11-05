@@ -38,7 +38,6 @@ export function postponeTask(taskId){
         dispatch(tasksIsLoading(true));
 
         postponeTaskAPI(taskId).then((response) => {
-                dispatch(tasksIsLoading(false));
                 if (!response.ok) {
                     throw Error(response.statusText);
                 }
@@ -46,7 +45,10 @@ export function postponeTask(taskId){
             })
             .then((response) => response.json())
             .then(() => dispatch(fetchTasksData()))
-            .catch(() => dispatch(tasksHasErrored(true)));
+            .catch(() => {
+                dispatch(tasksIsLoading(false));
+                dispatch(tasksHasErrored(true));
+            });
     };
 }
 export function resolveTask(taskId){

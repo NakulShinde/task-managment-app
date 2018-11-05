@@ -8,16 +8,16 @@ import TaskDetails from './components/TaskDetails'
 class App extends Component {
     render() {
         return (
-            <div class={styles.app}>
-                <h1 class={styles.app__header}>Task Manager</h1>
-                <div class={styles.app__content}>
+            <div className={styles.app}>
+                <h1 className={styles.app__header}>Task Manager</h1>
+                <div className={styles.app__content}>
                     <BrowserRouter>
                         <div>
                             <Route exact path="/" component={TaksListHome}/>
                             <Route path="/task/:id" component={TaskDetails}/>
                         </div>
                     </BrowserRouter>
-                    <hr class="border-line app__border"/>
+                    <hr className="border-line app__border"/>
                 </div>
             </div>
         );

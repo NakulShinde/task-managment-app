@@ -4,7 +4,6 @@
     background-color: $button-primary;
     border-color: $button-primary;
     color: $color-white;
-    padding: 5px 10px;
     margin: 5px;
     letter-spacing: 1px;
     line-height: 1;
@@ -25,6 +24,11 @@
         border-color: $button-primary;
         cursor: not-allowed;
     }
+}
+
+.bigButton {
+    padding: 10px 15px;
+    height: 35px;
 }
 
 .buttonBlueHollow {
