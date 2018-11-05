@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom';
 
 import {updateTaskDetails} from './../../actions/TaskDetailsActions'
-import {FormFieldDateReadOnly} from './FormFields'
+import {FormFieldReadOnly, FormFieldDateReadOnly} from './FormFields'
 import {FORM_FIELDS} from './../../utils/constants'
 
 import styles from './../TaskDetails.module.scss'
@@ -112,6 +112,7 @@ class TaskViewForm extends Component {
                                 type="text"></input>
                         </div>
                     </div>
+                    <FormFieldReadOnly label={FORM_FIELDS['status']} value={this.state['status']}></FormFieldReadOnly>
                     <div className={styles.formRow}>
                         <div className={styles.formLabel}>
                             <label>{FORM_FIELDS.priority}</label>
