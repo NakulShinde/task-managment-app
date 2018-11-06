@@ -3,28 +3,31 @@ import Datetime from 'react-datetime';
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom';
 
-import {updateTaskDetails} from './../../actions/TaskDetailsActions'
+import {updateTaskDetails, fetchTaskDetails} from './../../actions/TaskDetailsActions'
+
 import {FormFieldReadOnly, FormFieldDateReadOnly} from './FormFields'
 import {FORM_FIELDS} from './../../utils/constants'
 
 import styles from './../TaskDetails.module.scss'
 import buttonStyles from './../shared/Buttons.module.scss'
 
-
 class TaskViewForm extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            error: {}
         }
     }
 
-    componentWillReceiveProps(newProps) {
-        this.setState({
-            ...newProps.taskDetails
-        });
+    componentDidMount() {
+        this.props.fetchTaskData(this.props.taskId);
     }
+
+    componentWillReceiveProps(newProps) {
+        if(newProps.taskDetails !== this.state)
+        this.setState({...newProps.taskDetails});
+    }
+
     handleUserInput(e) {
         const name = e.target.name;
         const value = e.target.value;
@@ -74,11 +77,13 @@ class TaskViewForm extends Component {
     }
 
     render() {
-
+        // if(Object.keys(this.state).length <= 1){
+        //     return <div></div>
+        // }
         const displayField = ['createdat', 'postponedat', 'postponedtime', 'resolvedat', 'updatedat'].map((field, index) => {
             return <FormFieldDateReadOnly key={index} label={FORM_FIELDS[field]} value={this.state[field]}></FormFieldDateReadOnly>
         })
-        const {error} = this.state;
+        const error = this.state.error || {};
         return (
             <div className={styles.formContainer}>
                 <form action="#">
@@ -88,7 +93,8 @@ class TaskViewForm extends Component {
                         </div>
                         <div className={styles.formField}>
                             <input
-                                name={'title'}
+                                id='title'
+                                name='title'
                                 className={(error['title'])? styles.errorField: ''}
                                 onChange={this
                                 .handleUserInput
@@ -103,7 +109,8 @@ class TaskViewForm extends Component {
                         </div>
                         <div className={styles.formField}>
                             <input
-                                name={'description'}
+                                id='description'
+                                name='description'
                                 className={(error['description'])? styles.errorField: ''}
                                 onChange={this
                                 .handleUserInput
@@ -150,11 +157,11 @@ class TaskViewForm extends Component {
                     {displayField}
 
                     <div className={styles.formRowFooter}>
-                        <input
+                        <button
                             className={[buttonStyles.button, buttonStyles.bigButton].join(' ')}
                             type="submit"
                             onClick={this.onSubmitHandler.bind(this)}
-                            value="Update"></input>
+                            >Update</button>
 
                         <Link to={`/`}>
                             <button
@@ -169,11 +176,12 @@ class TaskViewForm extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return {};
+    return {taskDetails : state.taskDetails};
 };
 const matchDispatchToProps = (dispatch) => {
     return {
-        updateTaskDetails: (id) => dispatch(updateTaskDetails(id))
+        updateTaskDetails: (id) => dispatch(updateTaskDetails(id)),
+        fetchTaskData: (id) => dispatch(fetchTaskDetails(id))
     };
 };
 export default connect(mapStateToProps, matchDispatchToProps)(TaskViewForm)

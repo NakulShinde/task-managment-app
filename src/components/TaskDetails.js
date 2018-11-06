@@ -9,17 +9,11 @@ import styles from './TaskDetails.module.scss'
 import buttonStyles from './../components/shared/Buttons.module.scss'
 
 class TaskDetails extends Component {
-
+    
     constructor(props) {
         super(props)
-        this.state = {}
+        this.taskId = props.match.params['id'];
     }
-    componentDidMount() {
-        let taskId = this.props.match.params['id'];
-        this.props
-            .fetchTaskData(taskId);
-    }
-
     render() {
         let msg = ''; 
         if (this.props.isLoading) {
@@ -37,14 +31,14 @@ class TaskDetails extends Component {
                     <button className={[buttonStyles.button, buttonStyles.buttonBlueHollow, styles.backButton, buttonStyles.bigButton].join(' ')}>
                         Back</button>
                 </Link>
-                <TaskViewForm taskDetails={this.props.taskDetails}></TaskViewForm>
+                <TaskViewForm taskId={this.taskId}></TaskViewForm>
                
             </div>
         );
     }
 }
 const mapStateToProps = (state) => {
-    return {taskDetails: state.taskDetails, hasErrored: state.tasksHasErrored, isLoading: state.tasksIsLoading};
+    return {hasErrored: state.tasksHasErrored, isLoading: state.tasksIsLoading};
 };
 const matchDispatchToProps = (dispatch) => {
     return {
