@@ -22,7 +22,7 @@ class TaskListHome extends Component {
             msg =  <h4 className="message">Loading…</h4>
         }
         if (this.props.hasErrored) {
-            msg = <h4 className="message">Sorry! There was an error occured. Please try again later</h4>;
+            msg = <h4 className="message">An error occurred. Please try again later.</h4>;
         }
         return (
             <React.Fragment>

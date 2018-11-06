@@ -22,8 +22,10 @@ class Pagination extends Component {
     }
 
     render() {
-        const {currentPage, tasksList} = this.props;
-        
+        const {currentPage, tasksList, hasErrored} = this.props;
+        if(hasErrored){
+            return <div></div>
+        }
         const pages = fetchPageNumbers(getTotalPages(tasksList.length, PAGE_LIMIT), currentPage);
 
         const pageItem = (item, index, active = 0) => {
@@ -51,7 +53,11 @@ class Pagination extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return {tasksList: state.tasksSuccess, currentPage: state.currentPage};
+    return {
+        tasksList: state.tasksSuccess, 
+        hasErrored: state.tasksHasErrored, 
+        currentPage: state.currentPage
+    };
 };
 
 const matchDispatchToProps = (dispatch) => {

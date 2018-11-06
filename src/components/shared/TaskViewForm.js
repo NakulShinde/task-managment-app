@@ -77,9 +77,10 @@ class TaskViewForm extends Component {
     }
 
     render() {
-        // if(Object.keys(this.state).length <= 1){
-        //     return <div></div>
-        // }
+        if(this.props.hasErrored){
+            return <div></div>
+        }
+
         const displayField = ['createdat', 'postponedat', 'postponedtime', 'resolvedat', 'updatedat'].map((field, index) => {
             return <FormFieldDateReadOnly key={index} label={FORM_FIELDS[field]} value={this.state[field]}></FormFieldDateReadOnly>
         })
@@ -176,7 +177,10 @@ class TaskViewForm extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return {taskDetails : state.taskDetails};
+    return {
+        taskDetails : state.taskDetails,
+        hasErrored: state.tasksHasErrored
+    };
 };
 const matchDispatchToProps = (dispatch) => {
     return {
