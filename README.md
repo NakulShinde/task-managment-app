@@ -1,13 +1,15 @@
 "# Task Manger App task-managment-app" 
 
-Fornt End stack Used:
+# Front End stack Used:
 - React
 - Redux
+- Redux-thunk
 - react-routes
 - CSS-Modules
-- TypeScript
+- WebSocket
+- Unit Testing with jest & enzyme
 
-Steps to configure:
+# Steps to configure:
 
 - Clone repo to any directory
 - cd task-managment-app
