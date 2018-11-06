@@ -2,7 +2,7 @@ import React, {Component} from "react"
 import {connect} from 'react-redux'
 
 import {PAGE_LIMIT, LEFT_PAGE, RIGHT_PAGE} from './../utils/constants'
-import {fetchPageNumbers} from './../utils/index'
+import {fetchPageNumbers, getTotalPages} from './../utils/index'
 import {changeCurrentPage} from './../actions/TaskListActions'
 
 import styles from './Pagination.module.scss'
@@ -23,10 +23,8 @@ class Pagination extends Component {
 
     render() {
         const {currentPage, tasksList} = this.props;
-
-        const totalPages = Math.floor(tasksList.length / PAGE_LIMIT);
-
-        const pages = fetchPageNumbers(totalPages, currentPage);
+        
+        const pages = fetchPageNumbers(getTotalPages(tasksList.length, PAGE_LIMIT), currentPage);
 
         const pageItem = (item, index, active = 0) => {
             return <span

@@ -17,7 +17,7 @@ export const range = (from, to, step = 1) => {
 };
 
 export const fetchPageNumbers = (totalPages, currentPage) => {
-    
+
     const pageNeighbours = 1;
 
     const totalNumbers = pageNeighbours * 2 + 3;
@@ -77,12 +77,19 @@ export const fetchPageNumbers = (totalPages, currentPage) => {
     return range(1, totalPages);
 };
 
+export const getTotalPages = (taskLength, pageLimit) => {
+    let totalPages = Math.floor(taskLength / pageLimit);
+    if ((taskLength % pageLimit > 0)) {
+        totalPages++;
+    }
+    return totalPages;
+}
+
 export const getcurrentPageTasks = (tasks, currentPage) => {
     let highIndex = (tasks.length < PAGE_LIMIT)
         ? tasks.length
-        : (currentPage + 1) * PAGE_LIMIT;
-
-    return [...tasks.slice(currentPage * PAGE_LIMIT, highIndex)];
+        : currentPage * PAGE_LIMIT;
+    return [...tasks.slice((currentPage - 1) * PAGE_LIMIT, highIndex)];
 }
 
 export const orderByDueDate = (tasks) => {

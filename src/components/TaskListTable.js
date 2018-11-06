@@ -28,7 +28,7 @@ class TaskListTable extends Component {
     render() {
 
         const currentPageTasks = getcurrentPageTasks(this.props.tasksList, this.props.currentPage);
-        if (!currentPageTasks) {
+        if (!currentPageTasks || !currentPageTasks.length) {
             return <div></div>
         }
         const generateHeadRow = () => {
