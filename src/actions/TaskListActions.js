@@ -16,6 +16,10 @@ export function tasksFetchSuccess(items) {
     return {type: 'TASKS_FETCH_DATA_SUCCESS', items};
 }
 
+export function newTasksReceivedFromWS(item) {
+    return {type: 'TASKS_RECEIVED_WEB_SOCKET', item};
+}
+
 export function fetchTasksData() {
     return (dispatch) => {
         dispatch(tasksIsLoading(true));

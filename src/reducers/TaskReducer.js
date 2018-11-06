@@ -1,4 +1,3 @@
-
 import {orderByDueDateAndPriority} from './../utils/index'
 
 export function tasksHasErrored(state = false, action) {
@@ -31,11 +30,19 @@ export function currentPage(state = 1, action) {
 }
 
 export function tasksSuccess(state = [], action) {
-
+    let orderBy
     switch (action.type) {
         case 'TASKS_FETCH_DATA_SUCCESS':
 
-            let orderBy = orderByDueDateAndPriority(action.items);
+            orderBy = orderByDueDateAndPriority(action.items);
+            return [...orderBy];
+
+        case 'TASKS_RECEIVED_WEB_SOCKET':
+            orderBy = orderByDueDateAndPriority([
+                ...state,
+                action.item
+            ]);
+
             return [...orderBy];
         default:
             return state;

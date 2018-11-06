@@ -5,6 +5,7 @@ import {fetchTasksData} from "../actions/TaskListActions"
 
 import TaskListTable from './TaskListTable'
 import Pagination from './Pagination'
+import WebSocketConnect from './WebSocketConnect';
 
 class TaskListHome extends Component {
 
@@ -30,6 +31,7 @@ class TaskListHome extends Component {
                 <Pagination></Pagination>
                 <TaskListTable></TaskListTable>
                 <Pagination></Pagination>
+                <WebSocketConnect></WebSocketConnect>
             </React.Fragment>
         );
     }
