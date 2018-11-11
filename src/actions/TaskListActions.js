@@ -25,6 +25,7 @@ export function fetchTasksData() {
         dispatch(tasksIsLoading(true));
 
         getTasksListAPI().then((response) => {
+                dispatch(tasksHasErrored(false));
                 dispatch(tasksIsLoading(false));
                 if (!response.ok) {
                     throw Error(response.statusText);
@@ -60,6 +61,7 @@ export function resolveTask(taskId){
         dispatch(tasksIsLoading(true));
 
         resolveTaskAPI(taskId).then((response) => {
+                dispatch(tasksHasErrored(false));
                 dispatch(tasksIsLoading(false));
                 if (!response.ok) {
                     throw Error(response.statusText);

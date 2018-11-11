@@ -11,6 +11,7 @@ export function fetchTaskDetails(id) {
         dispatch(tasksIsLoading(true));
 
         getTaskDetailsAPI(id).then((response) => {
+                dispatch(tasksHasErrored(false));
                 dispatch(tasksIsLoading(false));
                 if (!response.ok) {
                     throw Error(response.statusText);
@@ -27,6 +28,7 @@ export function updateTaskDetails(task) {
         dispatch(tasksIsLoading(true));
 
         updateTaskDetailsAPI(task).then((response) => {
+                dispatch(tasksHasErrored(false));
                 dispatch(tasksIsLoading(false));    
                 if (!response.ok) {
                     throw Error(response.statusText);
@@ -34,7 +36,7 @@ export function updateTaskDetails(task) {
                 return response;
             })
             .then((response) => response.json())
-            .then((item) => dispatch(fetchTaskDetails(task.uuid)))
+            .then((item) => dispatch(taskDetailsData(task)))
             .catch(() => dispatch(tasksHasErrored(true)));
     };
 }
