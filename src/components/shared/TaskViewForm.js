@@ -29,13 +29,11 @@ class TaskViewForm extends Component {
     componentWillReceiveProps(newProps) {
         console.table(newProps.taskDetails);
         if (newProps.taskDetails !== this.state){
-            console.log("new State");
             this.setState({ ...newProps.taskDetails });
         }
     }
 
     componentWillUnmount(){
-        console.log('this.componentWillUnmount');
         this.setState({...this.deafultState});
     }
 
@@ -103,7 +101,7 @@ class TaskViewForm extends Component {
         const error = this.state.error || {};
         return (
             <div className={styles.formContainer}>
-                <form action="#">
+                <form action="#" id="task_form">
                     <div className={styles.formRow}>
                         <div className={styles.formLabel}>
                             <label>{FORM_FIELDS.title}</label>
@@ -163,6 +161,7 @@ class TaskViewForm extends Component {
                         </div>
                         <div className={styles.formField}>
                             <Datetime
+                                id='duedate'
                                 className={error["duedate"] ? styles.errorField : ""}
                                 value={new Date(this.state.duedate)}
                                 onChange={this.dateTimeChange.bind(this)}
@@ -174,6 +173,7 @@ class TaskViewForm extends Component {
 
                     <div className={styles.formRowFooter}>
                         <button
+                            id="submit"
                             className={[buttonStyles.button, buttonStyles.bigButton].join(
                                 " "
                             )}
@@ -185,6 +185,7 @@ class TaskViewForm extends Component {
 
                         <Link to={`/`}>
                             <button
+                                id="cancel"
                                 className={[
                                     buttonStyles.button,
                                     buttonStyles.buttonBlueHollow,
