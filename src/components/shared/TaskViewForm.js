@@ -1,89 +1,105 @@
-import React, {Component} from "react";
-import Datetime from 'react-datetime';
-import {connect} from 'react-redux'
-import {Link} from 'react-router-dom';
+import React, { Component } from "react";
+import Datetime from "react-datetime";
+import { Link } from "react-router-dom";
 
-import {updateTaskDetails, fetchTaskDetails} from './../../actions/TaskDetailsActions'
+import { FormFieldReadOnly, FormFieldDateReadOnly } from "./FormFields";
+import { FORM_FIELDS } from "./../../utils/constants";
 
-import {FormFieldReadOnly, FormFieldDateReadOnly} from './FormFields'
-import {FORM_FIELDS} from './../../utils/constants'
-
-import styles from './../TaskDetails.module.scss'
-import buttonStyles from './../shared/Buttons.module.scss'
+import styles from "./../TaskDetails.module.scss";
+import buttonStyles from "./../shared/Buttons.module.scss";
 
 class TaskViewForm extends Component {
-
     constructor(props) {
-        super(props)
-        this.state = {
+        super(props);
+        this.deafultState = {
+            createdat: 0,
+            description: '',
+            duedate: 0,
+            postponedat: 0,
+            postponedtime: 0,
+            priority: '0',
+            resolvedat: 0,
+            status: '',
+            title: '',
+            updatedat: 0
+        }
+        this.state = {...this.deafultState};
+    }
+    
+    componentWillReceiveProps(newProps) {
+        console.table(newProps.taskDetails);
+        if (newProps.taskDetails !== this.state){
+            console.log("new State");
+            this.setState({ ...newProps.taskDetails });
         }
     }
 
-    componentDidMount() {
-        this.props.fetchTaskData(this.props.taskId);
-    }
-
-    componentWillReceiveProps(newProps) {
-        if(newProps.taskDetails !== this.state)
-        this.setState({...newProps.taskDetails});
+    componentWillUnmount(){
+        console.log('this.componentWillUnmount');
+        this.setState({...this.deafultState});
     }
 
     handleUserInput(e) {
         const name = e.target.name;
         const value = e.target.value;
-        this.setState({[name]: value});
+        this.setState({ [name]: value });
     }
+
     dateTimeChange(newTime) {
-        console.log("date time change", newTime);
-        try{
+        try {
             this.setState({
-                duedate: newTime
-                    ._d
-                    .getTime()
-            })
-        }catch(e){
+                duedate: newTime._d.getTime()
+            });
+        } catch (e) {
             console.log(e);
-            this.setState({duedate: 0})
+            this.setState({ duedate: 0 });
         }
     }
-    
-    isValidForm (){
+
+    isValidForm() {
         let errors = {};
-        const fieldsToValidate = ['title', 'description', 'priority', 'duedate'];
-        for(let index = 0; index < fieldsToValidate.length; index++){
+        const fieldsToValidate = ["title", "description", "priority", "duedate"];
+
+        for (let index = 0; index < fieldsToValidate.length; index++) {
             let field = fieldsToValidate[index];
             let value = this.state[field];
-            if(typeof value === 'string' && value.trim() === ''){
-
-                errors[field]= true;
-            }else if(typeof value === 'number' && value === 0){
-                errors[field]= true;
+            if (typeof value === "string" && value.trim() === "") {
+                errors[field] = true;
+            } else if (typeof value === "number" && value === 0) {
+                errors[field] = true;
             }
         }
-        console.log("Errors",errors);
-        this.setState({error: {...errors}});
+
+        this.setState({ error: { ...errors } });
         return !Object.keys(errors).length;
     }
 
     onSubmitHandler(e) {
         e.preventDefault();
-        console.log("On submit clicked", this.state);
-        if(this.isValidForm()){
-            console.log("valid");
+        if (this.isValidForm()) {
             this.props.updateTaskDetails(this.state);
-        }else {
-
         }
     }
 
     render() {
-        if(this.props.hasErrored){
-            return <div></div>
+        if (this.props.hasErrored) {
+            return <div />;
         }
-
-        const displayField = ['createdat', 'postponedat', 'postponedtime', 'resolvedat', 'updatedat'].map((field, index) => {
-            return <FormFieldDateReadOnly key={index} label={FORM_FIELDS[field]} value={this.state[field]}></FormFieldDateReadOnly>
-        })
+        const displayField = [
+            "createdat",
+            "postponedat",
+            "postponedtime",
+            "resolvedat",
+            "updatedat"
+        ].map((field, index) => {
+            return (
+                <FormFieldDateReadOnly
+                    key={index}
+                    label={FORM_FIELDS[field]}
+                    value={this.state[field]}
+                />
+            );
+        });
         const error = this.state.error || {};
         return (
             <div className={styles.formContainer}>
@@ -94,14 +110,13 @@ class TaskViewForm extends Component {
                         </div>
                         <div className={styles.formField}>
                             <input
-                                id='title'
-                                name='title'
-                                className={(error['title'])? styles.errorField: ''}
-                                onChange={this
-                                .handleUserInput
-                                .bind(this)}
-                                value={this.state['title']}
-                                type="text"></input>
+                                id="title"
+                                name="title"
+                                className={error["title"] ? styles.errorField : ""}
+                                onChange={this.handleUserInput.bind(this)}
+                                value={this.state["title"]}
+                                type="text"
+                            />
                         </div>
                     </div>
                     <div className={styles.formRow}>
@@ -110,17 +125,19 @@ class TaskViewForm extends Component {
                         </div>
                         <div className={styles.formField}>
                             <input
-                                id='description'
-                                name='description'
-                                className={(error['description'])? styles.errorField: ''}
-                                onChange={this
-                                .handleUserInput
-                                .bind(this)}
-                                value={this.state['description']}
-                                type="text"></input>
+                                id="description"
+                                name="description"
+                                className={error["description"] ? styles.errorField : ""}
+                                onChange={this.handleUserInput.bind(this)}
+                                value={this.state["description"]}
+                                type="text"
+                            />
                         </div>
                     </div>
-                    <FormFieldReadOnly label={FORM_FIELDS['status']} value={this.state['status']}></FormFieldReadOnly>
+                    <FormFieldReadOnly
+                        label={FORM_FIELDS["status"]}
+                        value={this.state["status"]}
+                    />
                     <div className={styles.formRow}>
                         <div className={styles.formLabel}>
                             <label>{FORM_FIELDS.priority}</label>
@@ -129,11 +146,10 @@ class TaskViewForm extends Component {
                             <select
                                 id="priority"
                                 name="priority"
-                                className={(error['priority'])? styles.errorField: ''}
-                                onChange={this
-                                .handleUserInput
-                                .bind(this)}
-                                value={this.state['priority']}>
+                                className={error["priority"] ? styles.errorField : ""}
+                                onChange={this.handleUserInput.bind(this)}
+                                value={this.state["priority"]}
+                            >
                                 <option value="3">3</option>
                                 <option value="2">2</option>
                                 <option value="1">1</option>
@@ -147,11 +163,10 @@ class TaskViewForm extends Component {
                         </div>
                         <div className={styles.formField}>
                             <Datetime
-                                className={(error['duedate'])? styles.errorField: ''}
+                                className={error["duedate"] ? styles.errorField : ""}
                                 value={new Date(this.state.duedate)}
-                                onChange={this
-                                .dateTimeChange
-                                .bind(this)}></Datetime>
+                                onChange={this.dateTimeChange.bind(this)}
+                            />
                         </div>
                     </div>
 
@@ -159,33 +174,31 @@ class TaskViewForm extends Component {
 
                     <div className={styles.formRowFooter}>
                         <button
-                            className={[buttonStyles.button, buttonStyles.bigButton].join(' ')}
+                            className={[buttonStyles.button, buttonStyles.bigButton].join(
+                                " "
+                            )}
                             type="submit"
                             onClick={this.onSubmitHandler.bind(this)}
-                            >Update</button>
+                        >
+                            Update
+                        </button>
 
                         <Link to={`/`}>
                             <button
-                                className={[buttonStyles.button, buttonStyles.buttonBlueHollow, buttonStyles.bigButton].join(' ')}>
-                                Cancel</button>
+                                className={[
+                                    buttonStyles.button,
+                                    buttonStyles.buttonBlueHollow,
+                                    buttonStyles.bigButton
+                                ].join(" ")}
+                            >
+                                Cancel
+                            </button>
                         </Link>
                     </div>
                 </form>
             </div>
-        )
+        );
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        taskDetails : state.taskDetails,
-        hasErrored: state.tasksHasErrored
-    };
-};
-const matchDispatchToProps = (dispatch) => {
-    return {
-        updateTaskDetails: (id) => dispatch(updateTaskDetails(id)),
-        fetchTaskData: (id) => dispatch(fetchTaskDetails(id))
-    };
-};
-export default connect(mapStateToProps, matchDispatchToProps)(TaskViewForm)
+export default TaskViewForm;
