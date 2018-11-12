@@ -10,16 +10,31 @@
 - Unit Testing with jest & enzyme
 
 # Steps to configure:
-
 - Clone repo to any directory
 - cd task-managment-app
 - npm install
 - npm start
   - visit http://localhost:3000/ 
 
-To create a production build, 
-- npm run build.
+# API Setup (Used Docker image):
+- Used docker image to consume task API here (https://hub.docker.com/r/damianofds/taskmanager-all/)
+- Setup & run this docker image at your machine & update proxy set in package.json accordingly.
+  
+# Proxy Setup:
+  - Proxy has been already set in package.json as, 
+    "proxy": "http://192.168.99.100:8080"
 
+# To run test cases
+- npm test
+
+# To create a production build, 
+- npm run build.
+- build folder get created in project directory with combined, minimised and compressed code.
+
+# To server production build
+- npm install -g serve
+- serve -s build
+- Note: Proxy set in package.json will not work in production build. You have to have API's and UI working on same domain/ip.
 
 # Task List Page
 - 1
