@@ -1,9 +1,15 @@
 import React, { Component } from "react";
-import Datetime from "react-datetime";
 import { Link } from "react-router-dom";
 
-import { FormFieldReadOnly, FormFieldDateReadOnly } from "./FormFields";
+import {
+    FormFieldReadOnly,
+    FormFieldDateReadOnly,
+    FormFieldTextInput,
+    FormFieldSelect,
+    FormFieldDateInput
+} from "./FormFields";
 import { FORM_FIELDS } from "./../../utils/constants";
+import {CustomButton} from "./Buttons"
 
 import styles from "./../TaskDetails.module.scss";
 import buttonStyles from "./../shared/Buttons.module.scss";
@@ -23,18 +29,17 @@ class TaskViewForm extends Component {
             title: '',
             updatedat: 0
         }
-        this.state = {...this.deafultState};
+        this.state = { ...this.deafultState };
     }
-    
+
     componentWillReceiveProps(newProps) {
-        console.table(newProps.taskDetails);
-        if (newProps.taskDetails !== this.state){
+        if (newProps.taskDetails !== this.state) {
             this.setState({ ...newProps.taskDetails });
         }
     }
 
-    componentWillUnmount(){
-        this.setState({...this.deafultState});
+    componentWillUnmount() {
+        this.setState({ ...this.deafultState });
     }
 
     handleUserInput(e) {
@@ -72,8 +77,7 @@ class TaskViewForm extends Component {
         return !Object.keys(errors).length;
     }
 
-    onSubmitHandler(e) {
-        e.preventDefault();
+    onSubmitHandler() {
         if (this.isValidForm()) {
             this.props.updateTaskDetails(this.state);
         }
@@ -102,87 +106,54 @@ class TaskViewForm extends Component {
         return (
             <div className={styles.formContainer}>
                 <form action="#" id="task_form">
-                    <div className={styles.formRow}>
-                        <div className={styles.formLabel}>
-                            <label>{FORM_FIELDS.title}</label>
-                        </div>
-                        <div className={styles.formField}>
-                            <input
-                                id="title"
-                                name="title"
-                                className={error["title"] ? styles.errorField : ""}
-                                onChange={this.handleUserInput.bind(this)}
-                                value={this.state["title"]}
-                                type="text"
-                            />
-                        </div>
-                    </div>
-                    <div className={styles.formRow}>
-                        <div className={styles.formLabel}>
-                            <label>{FORM_FIELDS.description}</label>
-                        </div>
-                        <div className={styles.formField}>
-                            <input
-                                id="description"
-                                name="description"
-                                className={error["description"] ? styles.errorField : ""}
-                                onChange={this.handleUserInput.bind(this)}
-                                value={this.state["description"]}
-                                type="text"
-                            />
-                        </div>
-                    </div>
+                    <FormFieldTextInput
+                        label={FORM_FIELDS.title}
+                        elementId="title"
+                        elementName="title"
+                        customClass={error["title"] ? styles.errorField : ""}
+                        onChangeHandler={this.handleUserInput.bind(this)}
+                        value={this.state["title"]}
+                    ></FormFieldTextInput>
+                    <FormFieldTextInput
+                        label={FORM_FIELDS.description}
+                        elementId="description"
+                        elementName="description"
+                        customClass={error["description"] ? styles.errorField : ""}
+                        onChangeHandler={this.handleUserInput.bind(this)}
+                        value={this.state["description"]}
+                    ></FormFieldTextInput>
+
                     <FormFieldReadOnly
                         label={FORM_FIELDS["status"]}
                         value={this.state["status"]}
                     />
-                    <div className={styles.formRow}>
-                        <div className={styles.formLabel}>
-                            <label>{FORM_FIELDS.priority}</label>
-                        </div>
-                        <div className={styles.formField}>
-                            <select
-                                id="priority"
-                                name="priority"
-                                className={error["priority"] ? styles.errorField : ""}
-                                onChange={this.handleUserInput.bind(this)}
-                                value={this.state["priority"]}
-                            >
-                                <option value="3">3</option>
-                                <option value="2">2</option>
-                                <option value="1">1</option>
-                                <option value="0">0</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div className={styles.formRow}>
-                        <div className={styles.formLabel}>
-                            <label>{FORM_FIELDS.duedate}</label>
-                        </div>
-                        <div className={styles.formField}>
-                            <Datetime
-                                id='duedate'
-                                className={error["duedate"] ? styles.errorField : ""}
-                                value={new Date(this.state.duedate)}
-                                onChange={this.dateTimeChange.bind(this)}
-                            />
-                        </div>
-                    </div>
+                    <FormFieldSelect
+                        label={FORM_FIELDS.priority}
+                        elementId="priority"
+                        elementName="priority"
+                        customClass={error["priority"] ? styles.errorField : ""}
+                        onChangeHandler={this.handleUserInput.bind(this)}
+                        value={this.state["priority"]}
+                    ></FormFieldSelect>
+                    <FormFieldDateInput
+                        label={FORM_FIELDS.duedate}
+                        elementId="duedate"
+                        customClass={error["duedate"] ? styles.errorField : ""}
+                        onChangeHandler={this.dateTimeChange.bind(this)}
+                        value={new Date(this.state.duedate)}
+                    ></FormFieldDateInput>
 
                     {displayField}
 
                     <div className={styles.formRowFooter}>
-                        <button
+                        <CustomButton
                             id="submit"
-                            className={[buttonStyles.button, buttonStyles.bigButton].join(
-                                " "
-                            )}
+                            customClass={[buttonStyles.button, buttonStyles.bigButton]}
+                            onClickHandler={this.onSubmitHandler.bind(this)}
                             type="submit"
-                            onClick={this.onSubmitHandler.bind(this)}
-                        >
-                            Update
-                        </button>
-
+                            text="Update"
+                        ></CustomButton>
+                        
                         <Link to={`/`}>
                             <button
                                 id="cancel"
